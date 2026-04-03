@@ -37,7 +37,9 @@ if (cliArg === 'enable') {
   else { console.log('Usage report is already disabled.'); }
   process.exit(0);
 } else if (cliArg === 'status') {
-  console.log(existsSync(DISABLED_FLAG) ? 'Usage report is DISABLED.' : 'Usage report is ENABLED.');
+  const disabled = existsSync(DISABLED_FLAG);
+  console.log(disabled ? 'Usage report is DISABLED.' : 'Usage report is ENABLED.');
+  console.log(disabled ? 'Run: claude-usage-report enable' : 'Run: claude-usage-report disable');
   process.exit(0);
 }
 
