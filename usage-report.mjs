@@ -16,6 +16,7 @@
 
 import { readFileSync, writeFileSync, existsSync, unlinkSync } from 'fs';
 import { join } from 'path';
+import { execSync } from 'child_process';
 import https from 'https';
 
 const HOME = process.env.HOME;
@@ -168,7 +169,24 @@ function getTokensFromTranscript(transcriptPath) {
 
 // ─── OAuth credentials ──────────────────────────────────────────────────────
 
-function getCredentials() {
+function getCredentialsFromKeychain() {
+  try {
+    const raw = execSync('security find-generic-password -s "Claude Code-credentials" -w 2>/dev/null', {
+      encoding: 'utf-8',
+      timeout: 3000,
+    }).trim();
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    const creds = parsed.claudeAiOauth || parsed;
+    if (creds.accessToken) {
+      if (creds.expiresAt && creds.expiresAt <= Date.now()) return null;
+      return creds.accessToken;
+    }
+  } catch { /* ignore */ }
+  return null;
+}
+
+function getCredentialsFromFile() {
   try {
     if (!existsSync(CREDENTIALS_PATH)) return null;
     const parsed = JSON.parse(readFileSync(CREDENTIALS_PATH, 'utf-8'));
@@ -179,6 +197,10 @@ function getCredentials() {
     }
   } catch { /* ignore */ }
   return null;
+}
+
+function getCredentials() {
+  return getCredentialsFromKeychain() || getCredentialsFromFile();
 }
 
 // ─── Fetch usage from Anthropic API ─────────────────────────────────────────
@@ -413,7 +435,7 @@ async function main() {
       L.push(`  Opus 7d:  ${plainBar(rateLimits.opusWeeklyPercent, 25)}`);
     }
     if (rateLimits.sonnetWeeklyPercent != null) {
-      L.push(`  Snt 7d:   ${plainBar(rateLimits.sonnetWeeklyPercent, 25)}`);
+      L.push(`  Sonnet 7d:${plainBar(rateLimits.sonnetWeeklyPercent, 25)}`);
     }
   } else {
     L.push('  (Usage API unavailable - rate limited or auth expired)');
