@@ -1,0 +1,31 @@
+{
+  "name": "claude-usage-report",
+  "version": "1.0.0",
+  "description": "A Claude Code stop hook that displays a usage summary after each prompt cycle",
+  "main": "usage-report.mjs",
+  "type": "module",
+  "scripts": {
+    "install-hook": "bash install.sh",
+    "uninstall-hook": "bash uninstall.sh"
+  },
+  "keywords": [
+    "claude",
+    "claude-code",
+    "usage",
+    "tokens",
+    "hook"
+  ],
+  "author": "abhiyankhanal",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhiyankhanal/claude-usage-report.git"
+  },
+  "bugs": {
+    "url": "https://github.com/abhiyankhanal/claude-usage-report/issues"
+  },
+  "homepage": "https://github.com/abhiyankhanal/claude-usage-report#readme",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

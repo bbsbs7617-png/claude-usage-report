@@ -349,7 +349,7 @@ async function main() {
   }
 
   // Context delta between prompt cycles
-  const contextWindowSize = 200000;
+  const contextWindowSize = 1000000;
   let contextDelta = 0;
   let contextDeltaPercent = 0;
   let contextTotalPercent = 0;
@@ -399,7 +399,7 @@ async function main() {
   L.push('');
 
   L.push('  Context Window');
-  L.push(`  Total:  ${plainBar(contextTotalPercent, 25)} (${fmtTok(tokens ? tokens.currentPromptContextTokens : 0)} / 200k)`);
+  L.push(`  Total:  ${plainBar(contextTotalPercent, 25)} (${fmtTok(tokens ? tokens.currentPromptContextTokens : 0)} / 1M)`);
   L.push(`  Added:  +${fmtTok(contextDelta)} (+${contextDeltaPercent.toFixed(1)}%)`);
   L.push('');
 

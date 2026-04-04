@@ -15,7 +15,7 @@ A Claude Code stop hook that displays a usage summary after each prompt cycle.
   Est. Cost:   $ 0.5711   Session:     $8.4136
 
   Context Window
-  Total:  [#######..................] 27.7% (55.4k / 200k)
+  Total:  [#######..................] 27.7% (55.4k / 1M)
   Added:  +5.2k (+2.6%)
 
   Rate Utilized
@@ -42,7 +42,7 @@ A Claude Code stop hook that displays a usage summary after each prompt cycle.
 ## Installation
 
 ```bash
-git clone https://github.com/abhiyan-maitri/claude-usage-report.git
+git clone https://github.com/abhiyankhanal/claude-usage-report.git
 cd claude-usage-report
 bash install.sh
 ```
@@ -111,7 +111,7 @@ node ~/.claude/hooks/usage-report.mjs status
 | **Cache Hit** | `cache_read / (cache_read + cache_write)` -- higher is better |
 | **Est. Cost** | Estimated dollar cost of the last prompt cycle |
 | **Session** | Estimated dollar cost of the entire session |
-| **Context Total** | How full the 200k context window is |
+| **Context Total** | How full the 1M context window is |
 | **Context Added** | How much context grew compared to the previous prompt |
 | **Rate Utilized** | Your 5-hour and weekly rate limit consumption |
 
