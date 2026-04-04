@@ -108,9 +108,13 @@ function getTokensFromTranscript(transcriptPath) {
     let entry;
     try { entry = JSON.parse(line); } catch { continue; }
 
-    // Track user message timestamps
+    // Track user message timestamps (skip tool_result entries — same cycle)
     if (entry.type === 'user' && entry.timestamp && !entry.isMeta) {
-      lastSeenUserTimestamp = entry.timestamp;
+      const content = entry.message?.content;
+      const isToolResult = Array.isArray(content) && content.some(c => c.type === 'tool_result');
+      if (!isToolResult) {
+        lastSeenUserTimestamp = entry.timestamp;
+      }
       continue;
     }
 
