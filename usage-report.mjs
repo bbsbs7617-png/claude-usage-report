@@ -101,6 +101,9 @@ function getTokensFromTranscript(transcriptPath) {
 
   let lastSeenUserTimestamp = null;
   let currentPromptUser = null;
+  // Claude Code writes one JSONL line per content block; every line of the
+  // same assistant message shares message.id and carries the same usage.
+  const seenMessageIds = new Set();
 
   const lines = content.split('\n');
   for (const line of lines) {
@@ -122,6 +125,11 @@ function getTokensFromTranscript(transcriptPath) {
 
     const msg = entry.message;
     if (!msg || !msg.usage) continue;
+
+    if (msg.id) {
+      if (seenMessageIds.has(msg.id)) continue;
+      seenMessageIds.add(msg.id);
+    }
 
     const usage = msg.usage;
     const inputTok = usage.input_tokens || 0;
