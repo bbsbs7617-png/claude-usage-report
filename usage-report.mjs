@@ -101,13 +101,29 @@ function getTokensFromTranscript(transcriptPath) {
 
   let lastSeenUserTimestamp = null;
   let currentPromptUser = null;
-
-  const lines = content.split('\n');
-  for (const line of lines) {
-    if (!line.trim()) continue;
+  // Retain the first position (prompt attribution), replacing only its usage
+  // with the whole cumulative snapshot with greatest output; later wins ties.
+  const entries = [];
+  const messages = new Map();
+  for (const line of content.split('\n')) {
     let entry;
     try { entry = JSON.parse(line); } catch { continue; }
-
+    if (!entry || typeof entry !== 'object') continue;
+    const msg = entry.message;
+    if (entry.type === 'assistant' && msg?.usage && typeof msg.id === 'string' && msg.id) {
+      const key = JSON.stringify([entry.sessionId || '', entry.requestId || '', msg.id]);
+      const previous = messages.get(key);
+      if (previous) {
+        if ((msg.usage.output_tokens ?? 0) >= (previous.message.usage.output_tokens ?? 0)) {
+          previous.message.usage = msg.usage;
+        }
+        continue;
+      }
+      messages.set(key, entry);
+    }
+    entries.push(entry);
+  }
+  for (const entry of entries) {
     // Track user message timestamps (skip tool_result entries — same cycle)
     if (entry.type === 'user' && entry.timestamp && !entry.isMeta) {
       const content = entry.message?.content;
